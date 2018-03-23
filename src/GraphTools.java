@@ -2,7 +2,7 @@ import java.util.*;
 
 public class GraphTools {
 
-    static List<Integer> sommets = new ArrayList<>();
+    private static List<Integer> sommets = new ArrayList<>();
 
     private static int[][] generateGraphe(int size) {
         int[][] graphe = new int[size][size];
@@ -32,7 +32,7 @@ public class GraphTools {
         return graphe;
     }
 
-    public static List<Integer> getChildren(int sommet, int[][] graphe){
+    private static List<Integer> getChildren(int sommet, int[][] graphe){
         List<Integer> list = new ArrayList<>();
         for (int i = 0; i < graphe[sommet].length; i++) {
             if (graphe[sommet][i]>=0){
@@ -42,7 +42,7 @@ public class GraphTools {
         return list;
     }
 
-    public static void parcoursProfondeur(int sommet, int[][] graphe){
+    private static void parcoursProfondeur(int sommet, int[][] graphe){
         sommets.add(sommet);
         for (int s : getChildren(sommet, graphe))
         {
@@ -52,12 +52,12 @@ public class GraphTools {
         }
     }
 
-    public static boolean connexe(int[][] graphe){
+    private static boolean connexe(int[][] graphe){
         parcoursProfondeur(0, graphe);
         return sommets.size()==graphe.length;
     }
 
-    public static int[] dijkstra(int[][] graphe, int depart){
+    private static int[] dijkstra(int[][] graphe, int depart){
         int[] ponderation = new int[graphe.length];
         List<Integer> sommetsTraite = new ArrayList<>();
         int sommetEnCours = depart;
@@ -102,7 +102,7 @@ public class GraphTools {
         return distances;
     }
 
-    public static int[] naiveVersion(int[][] graphe, int depart){
+    private static int[] naiveVersion(int[][] graphe, int depart){
         int[] chemin = new int[graphe.length+1];
         int cheminEnCours = depart;
         for (int i = 0; i < graphe.length; i++) {
@@ -134,9 +134,9 @@ public class GraphTools {
 //            test = generateurGrapheComplet(5);
 //        }
 //        System.out.println(getChildren(3, test));
-        System.out.println(connexe(test));
 //        System.out.println(getNewSommet(test[0], new ArrayList<>()));
         System.out.println(Arrays.deepToString(test));
+        System.out.println(connexe(test));
         System.out.println(Arrays.toString(naiveVersion(test, 0)));
     }
 }
