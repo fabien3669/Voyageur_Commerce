@@ -115,9 +115,9 @@ public class GraphTools {
 
     private static int min(int[] ints, int index, int[] chemin) {
         int sommet = (index+1)%ints.length;
-        int min = ints[sommet];
+        int min = max(ints);
         for (int i = 0; i < ints.length; i++) {
-            if (!Arrays.asList(chemin).contains(i)){
+            if (!contains(chemin, i)){
                 if (ints[i]!=-1 && ints[i]<min){
                     min = ints[i];
                     sommet = i;
@@ -127,15 +127,45 @@ public class GraphTools {
         return sommet;
     }
 
+    private static int max(int[] a) {
+        int max = -1;
+        for (int i : a) if (i>=max) max=i;
+        return max;
+    }
+
+    private static boolean contains(int[] array, int val) {
+        for (int i : array) if (i==val) return true;
+        return false;
+    }
+
+    private static void printGraphe(int[][] graphe) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        sb.append("\n");
+        for (int[] t : graphe) {
+            sb.append(Arrays.toString(t));
+            sb.append("\n");
+        }
+        sb.append("]");
+        System.out.println(sb.toString());
+    }
+
     public static void main(String[] args) {
+        /*
+        * Graphe pour lequel la version naïve ne donne pas le chemin le plus court :
+        * int[][] test = {{-1, 1, 2, 3},{1, -1, 1, 3},{2, 1, -1, 20},{3, 3, 20, -1}};
+        * */
+
 //        int[][] test = {{-1,-1,2,-1,-1},{-1,-1,-1,1,3},{-1,1,-1,3,-1},{-1,-1,4,-1,-1},{2,-1,-1,-1,-1}};
-        int[][] test = generateurGrapheComplet(5);
+        int[][] test = generateurGrapheComplet(10);
+//        int[][] test = {{-1, 1, 7, 16, 7}, {1, -1, 7, 19, 17}, {7, 7, -1, 17, 8}, {16, 19, 17, -1, 13}, {7, 17, 8, 13, -1}};
 //        while (!connexe(test)){
 //            test = generateurGrapheComplet(5);
 //        }
+
 //        System.out.println(getChildren(3, test));
 //        System.out.println(getNewSommet(test[0], new ArrayList<>()));
-        System.out.println(Arrays.deepToString(test));
+        printGraphe(test);
         System.out.println(connexe(test));
         System.out.println(Arrays.toString(naiveVersion(test, 0)));
     }
